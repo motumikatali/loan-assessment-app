@@ -1,0 +1,71 @@
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f3d2e,#14532d);
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+.container{
+    background:white;
+    color:black;
+    padding:25px;
+    border-radius:15px;
+    width:400px;
+    margin:auto;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+h1{
+    color:#d4af37; /* gold */
+}
+
+button{
+    background:#d4af37;
+    color:black;
+    border:none;
+    padding:10px 20px;
+    margin-top:15px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c19b2c;
+}
+
+input{
+    padding:8px;
+    margin:5px;
+    width:90%;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.result{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    color:#14532d;
+}
+.header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+/* Money image */
+.money-img{
+    width:60px;
+    animation:bounce 1s infinite;
+}
+
+/* Bounce animation */
+@keyframes bounce{
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}

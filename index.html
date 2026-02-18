@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <header class="header">
+    <img src="images/money.png" class="money-img">
+    <h1>Loan Assessment System</h1>
+</header>
+
+<title>MFS Loan System</title>
+<style>
+body{font-family:Arial;background:#eef2f7;text-align:center}
+.box{background:white;width:420px;margin:40px auto;padding:25px;border-radius:12px}
+input,select{width:95%;padding:8px;margin:5px}
+button{background:#1e7e34;color:white;padding:10px;border:none;width:98%}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h2>💰 Loan Assessment System</h2>
+<div class="container">
+   <!-- your form here -->
+
+
+
+<form method="post">
+<input name="age" placeholder="Age">
+<select name="employment">
+<option value="employed">Employed</option>
+<option value="unemployed">Unemployed</option>
+</select>
+<input name="income" placeholder="Income">
+<input name="expenses" placeholder="Expenses">
+<input name="credit" placeholder="Credit Score">
+<input name="debts" placeholder="Debts">
+<input name="loan" placeholder="Loan Amount">
+<input name="period" placeholder="Months">
+<button>Check Loan</button>
+</form>
+</div>
+
+<h3>{{result}}</h3>
+</div>
+</body>
+</html>

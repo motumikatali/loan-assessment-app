@@ -1,45 +1,102 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <header class="header">
-    <img src="images/money.png" class="money-img">
-    <h1>Loan Assessment System</h1>
-</header>
+<html lang="en">
 
-<title>MFS Loan System</title>
-<style>
-body{font-family:Arial;background:#eef2f7;text-align:center}
-.box{background:white;width:420px;margin:40px auto;padding:25px;border-radius:12px}
-input,select{width:95%;padding:8px;margin:5px}
-button{background:#1e7e34;color:white;padding:10px;border:none;width:98%}
-</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFS Loan Assessment System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            background: white;
+            width: 420px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #1e7e34;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 98%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #166529;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .approved {
+            color: green;
+        }
+
+        .rejected {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
+
 <div class="box">
-<h2>💰 Loan Assessment System</h2>
-<div class="container">
-  
+    <h1>Loan Assessment System</h1>
 
+    <form onsubmit="event.preventDefault(); assessLoan();">
 
+        <input type="number" id="age" placeholder="Age" required>
 
-<form method="post">
-<input name="age" placeholder="Age">
-<select name="employment">
-<option value="employed">Employed</option>
-<option value="unemployed">Unemployed</option>
-</select>
-<input name="income" placeholder="Income">
-<input name="expenses" placeholder="Expenses">
-<input name="credit" placeholder="Credit Score">
-<input name="debts" placeholder="Debts">
-<input name="loan" placeholder="Loan Amount">
-<input name="period" placeholder="Months">
-<button>Check Loan</button>
-</form>
+        <select id="employment" required>
+            <option value="">Select Employment Status</option>
+            <option value="employed">Employed</option>
+            <option value="unemployed">Unemployed</option>
+        </select>
+
+        <input type="number" id="income" placeholder="Monthly Income" required>
+        <input type="number" id="expenses" placeholder="Monthly Expenses" required>
+        <input type="number" id="credit" placeholder="Credit Score" required>
+        <input type="number" id="debts" placeholder="Existing Debts" required>
+        <input type="number" id="loan" placeholder="Loan Amount" required>
+        <input type="number" id="period" placeholder="Loan Period (Months)" required>
+
+        <button type="submit">Check Loan</button>
+
+    </form>
+
+    <div id="result"></div>
 </div>
 
-<h3>{{result}}</h3>
-</div>
+<script src="script.js"></script>
+
 </body>
 </html>

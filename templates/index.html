@@ -1,45 +1,200 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <header class="header">
-    <img src="images/money.png" class="money-img">
-    <h1>Loan Assessment System</h1>
-</header>
+    <title>MFS Loan System</title>
 
-<title>MFS Loan System</title>
-<style>
-body{font-family:Arial;background:#eef2f7;text-align:center}
-.box{background:white;width:420px;margin:40px auto;padding:25px;border-radius:12px}
-input,select{width:95%;padding:8px;margin:5px}
-button{background:#1e7e34;color:white;padding:10px;border:none;width:98%}
-</style>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+            text-align: center;
+        }
+
+        .box {
+            background: white;
+            width: 420px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 3px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input.invalid {
+            border: 2px solid red;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            height: 14px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #1e7e34;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #16692c;
+        }
+    </style>
 </head>
 
 <body>
+
 <div class="box">
-<h2>💰 Loan Assessment System</h2>
-<div class="container">
-   <!-- your form here -->
+    <h2>💰 Loan Application</h2>
 
+    <form method="post">
 
+        <!-- AGE -->
+        <label>Age</label>
+        <input type="text" id="age" name="age">
+        <div class="error-msg" id="ageError"></div>
 
-<form method="post">
-<input name="age" placeholder="Age">
-<select name="employment">
-<option value="employed">Employed</option>
-<option value="unemployed">Unemployed</option>
-</select>
-<input name="income" placeholder="Income">
-<input name="expenses" placeholder="Expenses">
-<input name="credit" placeholder="Credit Score">
-<input name="debts" placeholder="Debts">
-<input name="loan" placeholder="Loan Amount">
-<input name="period" placeholder="Months">
-<button>Check Loan</button>
-</form>
+        <!-- EMPLOYMENT -->
+        <label>Employment</label>
+        <select name="employment">
+            <option value="employed">Employed</option>
+            <option value="unemployed">Unemployed</option>
+        </select>
+
+        <!-- INCOME -->
+        <label>Income</label>
+        <input type="text" id="income" name="income">
+        <div class="error-msg" id="incomeError"></div>
+
+        <!-- EXPENSES -->
+        <label>Expenses</label>
+        <input type="text" id="expenses" name="expenses">
+        <div class="error-msg" id="expensesError"></div>
+
+        <!-- CREDIT -->
+        <label>Credit Score</label>
+        <input type="text" id="credit" name="credit">
+        <div class="error-msg" id="creditError"></div>
+
+      
+         <!-- DEBTS (Simple checkbox, no big input box) -->
+<div style="margin:15px 0;">
+    <label style="display:flex; align-items:center; gap:8px;">
+        <strong>Debts:</strong>
+        <input type="checkbox" name="debts" value="yes" style="width:auto;">
+    </label>
+</div>
+        <!-- LOAN -->
+        <label>Loan Amount</label>
+        <input type="text" id="loan" name="loan">
+        <div class="error-msg" id="loanError"></div>
+
+        <!-- PERIOD -->
+        <label>Loan Period (Months)</label>
+        <input type="text" id="period" name="period">
+        <div class="error-msg" id="periodError"></div>
+
+        <button type="submit">Check Loan</button>
+
+        {% if result %}
+    <h3 style="color:green;">{{ result }}</h3>
+{% endif %}
+    </form>
+
 </div>
 
-<h3>{{result}}</h3>
-</div>
+<script>
+
+function validateNumber(input, errorElement, min = 0, max = null, message) {
+    input.addEventListener("input", function () {
+        let value = input.value;
+
+        if (!/^\d+$/.test(value)) {
+            input.classList.add("invalid");
+            errorElement.textContent = "Must be a valid number";
+            return;
+        }
+
+        let num = parseInt(value);
+
+        if (num < min) {
+            input.classList.add("invalid");
+            errorElement.textContent = message;
+        }
+        else if (max !== null && num > max) {
+            input.classList.add("invalid");
+            errorElement.textContent = "Value too large";
+        }
+        else {
+            input.classList.remove("invalid");
+            errorElement.textContent = "";
+        }
+    });
+}
+
+validateNumber(
+    document.getElementById("age"),
+    document.getElementById("ageError"),
+    18,
+    null,
+    "Must be 18 or older"
+);
+
+validateNumber(
+    document.getElementById("income"),
+    document.getElementById("incomeError"),
+    1,
+    null,
+    "Income must be positive"
+);
+
+validateNumber(
+    document.getElementById("expenses"),
+    document.getElementById("expensesError"),
+    0,
+    null,
+    "Expenses cannot be negative"
+);
+
+validateNumber(
+    document.getElementById("credit"),
+    document.getElementById("creditError"),
+    1,
+    null,
+    "Credit score must be positive"
+);
+
+validateNumber(
+    document.getElementById("loan"),
+    document.getElementById("loanError"),
+    1,
+    null,
+    "Loan must be positive"
+);
+
+validateNumber(
+    document.getElementById("period"),
+    document.getElementById("periodError"),
+    1,
+    36,
+    "Must be between 1 and 36 months"
+);
+
+</script>
+
 </body>
 </html>

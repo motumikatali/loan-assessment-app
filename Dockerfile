@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y swi-prolog
 # set working directory
 WORKDIR /app
 
-# copy project files
+ ADD  --chown=user:group dest# copy project files
 COPY . .
 
 # install python packages

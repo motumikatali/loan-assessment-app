@@ -1,68 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MFS Loan Assessment System</title>
+    <title>MFS Loan System</title>
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             background: #eef2f7;
             text-align: center;
-            margin: 0;
-            padding: 0;
         }
 
         .box {
             background: white;
             width: 420px;
-            margin: 50px auto;
+            margin: 40px auto;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: left;
         }
 
         input, select {
-            width: 95%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 6px;
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 3px;
             border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input.invalid {
+            border: 2px solid red;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            height: 14px;
+            margin-bottom: 10px;
         }
 
         button {
             background: #1e7e34;
             color: white;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            width: 98%;
-            border-radius: 6px;
-            font-size: 16px;
+            width: 100%;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
-            background: #166529;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .approved {
-            color: green;
-        }
-
-        .rejected {
-            color: red;
+            background: #16692c;
         }
     </style>
 </head>
@@ -70,33 +59,139 @@
 <body>
 
 <div class="box">
-    <h1>Loan Assessment System</h1>
+    <h2>💰 Loan Application</h2>
 
-    <form onsubmit="event.preventDefault(); assessLoan();">
+    <form method="post">
 
-        <input type="number" id="age" placeholder="Age" required>
+        <!-- AGE -->
+        <label>Age</label>
+        <input type="text" id="age" name="age">
+        <div class="error-msg" id="ageError"></div>
 
-        <select id="employment" required>
-            <option value="">Select Employment Status</option>
+        <!-- EMPLOYMENT -->
+        <label>Employment</label>
+        <select name="employment">
             <option value="employed">Employed</option>
             <option value="unemployed">Unemployed</option>
         </select>
 
-        <input type="number" id="income" placeholder="Monthly Income" required>
-        <input type="number" id="expenses" placeholder="Monthly Expenses" required>
-        <input type="number" id="credit" placeholder="Credit Score" required>
-        <input type="number" id="debts" placeholder="Existing Debts" required>
-        <input type="number" id="loan" placeholder="Loan Amount" required>
-        <input type="number" id="period" placeholder="Loan Period (Months)" required>
+        <!-- INCOME -->
+        <label>Income</label>
+        <input type="text" id="income" name="income">
+        <div class="error-msg" id="incomeError"></div>
+
+        <!-- EXPENSES -->
+        <label>Expenses</label>
+        <input type="text" id="expenses" name="expenses">
+        <div class="error-msg" id="expensesError"></div>
+
+        <!-- CREDIT -->
+        <label>Credit Score</label>
+        <input type="text" id="credit" name="credit">
+        <div class="error-msg" id="creditError"></div>
+
+      
+         <!-- DEBTS (Simple checkbox, no big input box) -->
+<div style="margin:15px 0;">
+    <label style="display:flex; align-items:center; gap:8px;">
+        <strong>Debts:</strong>
+        <input type="checkbox" name="debts" value="yes" style="width:auto;">
+    </label>
+</div>
+        <!-- LOAN -->
+        <label>Loan Amount</label>
+        <input type="text" id="loan" name="loan">
+        <div class="error-msg" id="loanError"></div>
+
+        <!-- PERIOD -->
+        <label>Loan Period (Months)</label>
+        <input type="text" id="period" name="period">
+        <div class="error-msg" id="periodError"></div>
 
         <button type="submit">Check Loan</button>
 
     </form>
 
-    <div id="result"></div>
 </div>
 
-<script src="script.js"></script>
+<script>
+
+function validateNumber(input, errorElement, min = 0, max = null, message) {
+    input.addEventListener("input", function () {
+        let value = input.value;
+
+        if (!/^\d+$/.test(value)) {
+            input.classList.add("invalid");
+            errorElement.textContent = "Must be a valid number";
+            return;
+        }
+
+        let num = parseInt(value);
+
+        if (num < min) {
+            input.classList.add("invalid");
+            errorElement.textContent = message;
+        }
+        else if (max !== null && num > max) {
+            input.classList.add("invalid");
+            errorElement.textContent = "Value too large";
+        }
+        else {
+            input.classList.remove("invalid");
+            errorElement.textContent = "";
+        }
+    });
+}
+
+validateNumber(
+    document.getElementById("age"),
+    document.getElementById("ageError"),
+    18,
+    null,
+    "Must be 18 or older"
+);
+
+validateNumber(
+    document.getElementById("income"),
+    document.getElementById("incomeError"),
+    1,
+    null,
+    "Income must be positive"
+);
+
+validateNumber(
+    document.getElementById("expenses"),
+    document.getElementById("expensesError"),
+    0,
+    null,
+    "Expenses cannot be negative"
+);
+
+validateNumber(
+    document.getElementById("credit"),
+    document.getElementById("creditError"),
+    1,
+    null,
+    "Credit score must be positive"
+);
+
+validateNumber(
+    document.getElementById("loan"),
+    document.getElementById("loanError"),
+    1,
+    null,
+    "Loan must be positive"
+);
+
+validateNumber(
+    document.getElementById("period"),
+    document.getElementById("periodError"),
+    1,
+    36,
+    "Must be between 1 and 36 months"
+);
+
+</script>
 
 </body>
 </html>
